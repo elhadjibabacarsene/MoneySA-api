@@ -29,7 +29,11 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
                 ->setNom($faker->lastName)
                 ->setEmail($faker->email)
                 ->setPassword($this->encoder->encodePassword($user ,'password'))
-                ->setRole($this->getReference('ROLE_'.$role));
+                ->setTelephone($faker->phoneNumber)
+                ->setRole($this->getReference('ROLE_'.$role))
+                ->setIsActive(true)
+                ->setIsFirstConnexion(true)
+                ->setIsDeleted(false);
             $manager->persist($user);
         }
 

@@ -2,10 +2,12 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\AgenceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=AgenceRepository::class)
@@ -16,36 +18,42 @@ class Agence
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"compte_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"compte_read", "compte_write"})
      */
     private $libelle;
 
     /**
      * @ORM\Column(type="string", length=30)
+     * @Groups({"compte_read", "compte_write"})
      */
     private $telephone;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @Groups({"compte_read", "compte_write"})
      */
     private $lattitude;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @Groups({"compte_read", "compte_write"})
      */
     private $longitude;
 
     /**
-     * @ORM\OneToOne(targetEntity=Compte::class, mappedBy="agence", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Compte::class, mappedBy="agence")
      */
     private $compte;
 
     /**
-     * @ORM\OneToMany(targetEntity=User::class, mappedBy="agence")
+     * @ORM\OneToMany(targetEntity=User::class, mappedBy="agence", cascade={"persist"})
+     * @Groups({"compte_write", "compte_read"})
      */
     private $users;
 
